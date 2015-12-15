@@ -242,7 +242,6 @@ func (r *AuthnRequest) SignedString(privateKeyPath string) (string, error) {
 	return SignRequest(s, privateKeyPath)
 }
 
-// GetAuthnRequestURL generate a URL for the AuthnRequest to the IdP with the SAMLRequst parameter encoded
 func (r *AuthnRequest) EncodedSignedString(privateKeyPath string) (string, error) {
 	signed, err := r.SignedString(privateKeyPath)
 	if err != nil {
