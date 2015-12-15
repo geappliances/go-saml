@@ -17,7 +17,7 @@ type AuthnRequest struct {
 	Issuer                         Issuer                `xml:"Issuer"`
 	NameIDPolicy                   NameIDPolicy          `xml:"NameIDPolicy"`
 	RequestedAuthnContext          RequestedAuthnContext `xml:"RequestedAuthnContext"`
-	Signature                      Signature             `xml:"Signature,omitempty"`
+	Signature                      *Signature            `xml:"Signature,omitempty"`
 	originalString                 string
 }
 
