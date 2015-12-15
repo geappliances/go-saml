@@ -187,7 +187,6 @@ type Response struct {
 	InResponseTo string `xml:"InResponseTo,attr"`
 
 	Assertion Assertion `xml:"Assertion"`
-	Signature Signature `xml:"Signature"`
 	Issuer    Issuer    `xml:"Issuer"`
 	Status    Status    `xml:"Status"`
 
@@ -206,6 +205,7 @@ type Assertion struct {
 	Subject            Subject
 	Conditions         Conditions
 	AttributeStatement AttributeStatement
+	Signature          Signature `xml:"Signature"`
 }
 
 type Conditions struct {
