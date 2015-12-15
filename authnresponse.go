@@ -59,7 +59,7 @@ func (r *Response) Validate(s *ServiceProviderSettings) error {
 		return errors.New("no Assertions")
 	}
 
-	if len(r.Signature.SignatureValue.Value) == 0 {
+	if len(r.Assertion.Signature.SignatureValue.Value) == 0 {
 		return errors.New("no signature")
 	}
 
@@ -110,78 +110,6 @@ func NewSignedResponse() *Response {
 			},
 			Url: "", // caller must populate ar.AppSettings.AssertionConsumerServiceURL,
 		},
-		Signature: Signature{
-			XMLName: xml.Name{
-				Local: "samlsig:Signature",
-			},
-			Id: "Signature1",
-			SignedInfo: SignedInfo{
-				XMLName: xml.Name{
-					Local: "samlsig:SignedInfo",
-				},
-				CanonicalizationMethod: CanonicalizationMethod{
-					XMLName: xml.Name{
-						Local: "samlsig:CanonicalizationMethod",
-					},
-					Algorithm: "http://www.w3.org/2001/10/xml-exc-c14n#",
-				},
-				SignatureMethod: SignatureMethod{
-					XMLName: xml.Name{
-						Local: "samlsig:SignatureMethod",
-					},
-					Algorithm: "http://www.w3.org/2000/09/xmldsig#rsa-sha1",
-				},
-				SamlsigReference: SamlsigReference{
-					XMLName: xml.Name{
-						Local: "samlsig:Reference",
-					},
-					URI: "", // caller must populate "#" + ar.Id,
-					Transforms: Transforms{
-						XMLName: xml.Name{
-							Local: "samlsig:Transforms",
-						},
-						Transform: Transform{
-							XMLName: xml.Name{
-								Local: "samlsig:Transform",
-							},
-							Algorithm: "http://www.w3.org/2000/09/xmldsig#enveloped-signature",
-						},
-					},
-					DigestMethod: DigestMethod{
-						XMLName: xml.Name{
-							Local: "samlsig:DigestMethod",
-						},
-						Algorithm: "http://www.w3.org/2000/09/xmldsig#sha1",
-					},
-					DigestValue: DigestValue{
-						XMLName: xml.Name{
-							Local: "samlsig:DigestValue",
-						},
-					},
-				},
-			},
-			SignatureValue: SignatureValue{
-				XMLName: xml.Name{
-					Local: "samlsig:SignatureValue",
-				},
-			},
-			KeyInfo: KeyInfo{
-				XMLName: xml.Name{
-					Local: "samlsig:KeyInfo",
-				},
-				X509Data: X509Data{
-					XMLName: xml.Name{
-						Local: "samlsig:X509Data",
-					},
-					X509Certificate: X509Certificate{
-						XMLName: xml.Name{
-							Local: "samlsig:X509Certificate",
-						},
-						Cert: "", // caller must populate cert,
-					},
-				},
-			},
-		},
 		Status: Status{
 			XMLName: xml.Name{
 				Local: "samlp:Status",
@@ -204,6 +132,78 @@ func NewSignedResponse() *Response {
 			Version:      "2.0",
 			ID:           util.ID(),
 			IssueInstant: time.Now().UTC().Format(time.RFC3339Nano),
+			Signature: Signature{
+				XMLName: xml.Name{
+					Local: "samlsig:Signature",
+				},
+				Id: "Signature1",
+				SignedInfo: SignedInfo{
+					XMLName: xml.Name{
+						Local: "samlsig:SignedInfo",
+					},
+					CanonicalizationMethod: CanonicalizationMethod{
+						XMLName: xml.Name{
+							Local: "samlsig:CanonicalizationMethod",
+						},
+						Algorithm: "http://www.w3.org/2001/10/xml-exc-c14n#",
+					},
+					SignatureMethod: SignatureMethod{
+						XMLName: xml.Name{
+							Local: "samlsig:SignatureMethod",
+						},
+						Algorithm: "http://www.w3.org/2000/09/xmldsig#rsa-sha1",
+					},
+					SamlsigReference: SamlsigReference{
+						XMLName: xml.Name{
+							Local: "samlsig:Reference",
+						},
+						URI: "", // caller must populate "#" + ar.Id,
+						Transforms: Transforms{
+							XMLName: xml.Name{
+								Local: "samlsig:Transforms",
+							},
+							Transform: Transform{
+								XMLName: xml.Name{
+									Local: "samlsig:Transform",
+								},
+								Algorithm: "http://www.w3.org/2000/09/xmldsig#enveloped-signature",
+							},
+						},
+						DigestMethod: DigestMethod{
+							XMLName: xml.Name{
+								Local: "samlsig:DigestMethod",
+							},
+							Algorithm: "http://www.w3.org/2000/09/xmldsig#sha1",
+						},
+						DigestValue: DigestValue{
+							XMLName: xml.Name{
+								Local: "samlsig:DigestValue",
+							},
+						},
+					},
+				},
+				SignatureValue: SignatureValue{
+					XMLName: xml.Name{
+						Local: "samlsig:SignatureValue",
+					},
+				},
+				KeyInfo: KeyInfo{
+					XMLName: xml.Name{
+						Local: "samlsig:KeyInfo",
+					},
+					X509Data: X509Data{
+						XMLName: xml.Name{
+							Local: "samlsig:X509Data",
+						},
+						X509Certificate: X509Certificate{
+							XMLName: xml.Name{
+								Local: "samlsig:X509Certificate",
+							},
+							Cert: "", // caller must populate cert,
+						},
+					},
+				},
+			},
 			Issuer: Issuer{
 				XMLName: xml.Name{
 					Local: "saml:Issuer",

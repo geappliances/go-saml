@@ -9,7 +9,7 @@ import (
 )
 
 const (
-	xmlResponseID = "urn:oasis:names:tc:SAML:2.0:protocol:Response"
+	xmlResponseID = "urn:oasis:names:tc:SAML:2.0:assertion:Assertion"
 	xmlRequestID  = "urn:oasis:names:tc:SAML:2.0:protocol:AuthnRequest"
 )
 
