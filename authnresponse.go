@@ -63,6 +63,16 @@ func (r *Response) Validate(s *ServiceProviderSettings) error {
 		return errors.New("no signature")
 	}
 
+	// For verification we need to decide if we are on a broken shibboleth (Assertion.Signature) or a good one.
+	var broken_shibboleth bool
+	if len(r.Assertion.Signature.SignatureValue.Value) > 0 {
+		broken_shibboleth = true
+	}
+
+	if len(r.Signature.SignatureValue.Value) > 0 {
+		broken_shibboleth = false
+	}
+
 	if r.Destination != s.AssertionConsumerServiceURL {
 		return errors.New("destination mismath expected: " + s.AssertionConsumerServiceURL + " not " + r.Destination)
 	}
@@ -75,7 +85,7 @@ func (r *Response) Validate(s *ServiceProviderSettings) error {
 		return errors.New("subject recipient mismatch, expected: " + s.AssertionConsumerServiceURL + " not " + r.Assertion.Subject.SubjectConfirmation.SubjectConfirmationData.Recipient)
 	}
 
-	err := VerifyResponseSignature(r.originalString, s.IDPPublicCertPath)
+	err := VerifyResponseSignature(r.originalString, s.IDPPublicCertPath, broken_shibboleth)
 	if err != nil {
 		return err
 	}
