@@ -189,6 +189,7 @@ type Response struct {
 	Assertion Assertion `xml:"Assertion"`
 	Issuer    Issuer    `xml:"Issuer"`
 	Status    Status    `xml:"Status"`
+	Signature Signature `xml:"Signature,omitempty"`
 
 	originalString string
 }
